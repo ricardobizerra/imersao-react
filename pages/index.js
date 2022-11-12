@@ -1,10 +1,13 @@
+import React from 'react';
 import config from '../config.json';
 import styled from 'styled-components';
 import { CSSReset } from '../src/components/CSSReset';
 import Menu from '../src/components/Menu';
 import { StyledTimeline } from '../src/components/Timeline'
 
-function HomePage() {    
+function HomePage() {
+    const [valorFiltro, setValorFiltro] = React.useState('');
+
     return (
         <>
             <CSSReset />
@@ -15,9 +18,16 @@ function HomePage() {
                     flex: 1
                 }
             }>
-                <Menu />
+                <Menu 
+                    valorFiltro={valorFiltro}
+                    setValorFiltro={setValorFiltro}
+                />
                 <Header bannerLink={config.bannerLink} />
-                <Timeline playlists={config.playlists} favorites={config.favorites}>
+                <Timeline 
+                    searchValue={valorFiltro}
+                    playlists={config.playlists} 
+                    favorites={config.favorites}
+                >
                     Conteúdo
                 </Timeline>
             </div>
@@ -74,31 +84,38 @@ function Header(props) {
 
 // Timeline
 
-function Timeline(props) {
-    const playlistNames = Object.keys(props.playlists);
-    const favoritesNames = props.favorites
+function Timeline({searchValue, playlists, favorites}) {
+    const playlistNames = Object.keys(playlists);
+    const favoritesNames = favorites;
 
     // Statement x Retorno por expressão
 
     return (
         <StyledTimeline>
             {playlistNames.map((playlistName) => {
-                const videos = props.playlists[playlistName];
+                const videos = playlists[playlistName];
 
                 return (
-                    <section className='videos'>
+                    <section key={playlistName} className='videos'>
                         <h2>{playlistName}</h2>
                         <div>
-                            {videos.map((video) => {
-                                return (
-                                    <a href={video.url}>
-                                        <img src={video.thumb} />
-                                        <span>
-                                            {video.title}
-                                        </span>
-                                    </a>
-                                )
-                            })}
+                            {videos
+                                .filter((video) => {
+                                    const titleNormalized = video.title.toLowerCase();
+                                    const searchValueNormalized = searchValue.toLowerCase();
+                                    return titleNormalized.includes(searchValueNormalized)
+                                })
+                                .map((video) => {
+                                    return (
+                                        <a key={video.url} href={video.url}>
+                                            <img src={video.thumb} />
+                                            <span>
+                                                {video.title}
+                                            </span>
+                                        </a>
+                                    )
+                                })
+                            }
                         </div>
                     </section>
                 )
@@ -109,10 +126,8 @@ function Timeline(props) {
                 
                 <div className='favorites-name'>
                     {favoritesNames.map((favoritesName) => {
-                        const favorites = props.favorites[favoritesName];
-
                         return (
-                            <div>
+                            <div key={favoritesName.github}>
                                 <img src={`https://github.com/${favoritesName.github}.png`} />
                                 <span>{favoritesName.name}</span>
                                 <span>@{favoritesName.github}</span>

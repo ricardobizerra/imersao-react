@@ -46,9 +46,11 @@ export const StyledTimeline = styled.div`
   }
 
   .favorites{
+    width: calc(100vw - 16px * 4);
     padding: 16px;
 
     .favorites-name{
+      width: calc(100vw - 16px * 4);
       display: flex;
 
       div{
