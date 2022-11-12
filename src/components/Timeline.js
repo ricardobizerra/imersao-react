@@ -10,7 +10,7 @@ export const StyledTimeline = styled.div`
     margin-bottom: 16px;
     text-transform: capitalize;
   }
-  img {
+  .videos img {
     aspect-ratio: 16/9;
     font-weight: 500;
     object-fit: cover;
@@ -18,7 +18,7 @@ export const StyledTimeline = styled.div`
     max-width: 210px;
     height: auto;
   }
-  section {
+  .videos {
     width: 100%;
     padding: 0;
     overflow: hidden;
@@ -40,6 +40,28 @@ export const StyledTimeline = styled.div`
           display: block;
           padding-right: 24px;
           color: ${({ theme }) => theme.textColorBase || "#222222"};
+        }
+      }
+    }
+  }
+
+  .favorites{
+    padding: 16px;
+
+    .favorites-name{
+      display: flex;
+
+      div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-right: 24px;
+  
+        img{
+          border-radius: 50%;
+          width: 150px;
+          margin-bottom: 16px;
         }
       }
     }
