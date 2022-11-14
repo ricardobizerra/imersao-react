@@ -14,14 +14,18 @@ function HomePage() {
         service
             .getAllVideos()
             .then((dados) => {
-                const novasPlaylists = {...playlists};
+                const novasPlaylists = {};
                 dados.data.forEach((video) => {
                     if(!novasPlaylists[video.playlist]) {
                         novasPlaylists[video.playlist] = [];
                     }
 
-                    novasPlaylists[video.playlist]?.push(video)
+                    novasPlaylists[video.playlist] = [
+                        video,
+                        ...novasPlaylists[video.playlist]
+                    ]
                 })
+                
                 setPlaylists(novasPlaylists)
             })
     }, [])
