@@ -10,25 +10,25 @@ function HomePage() {
     const [valorFiltro, setValorFiltro] = React.useState('');
     const [playlists, setPlaylists] = React.useState({})
 
-    React.useEffect(() => {
-        service
-            .getAllVideos()
-            .then((dados) => {
-                const novasPlaylists = {};
-                dados.data.forEach((video) => {
-                    if(!novasPlaylists[video.playlist]) {
-                        novasPlaylists[video.playlist] = [];
-                    }
+    // React.useEffect(() => {
+    //     service
+    //         .getAllVideos()
+    //         .then((dados) => {
+    //             const novasPlaylists = {};
+    //             dados.data.forEach((video) => {
+    //                 if(!novasPlaylists[video.playlist]) {
+    //                     novasPlaylists[video.playlist] = [];
+    //                 }
 
-                    novasPlaylists[video.playlist] = [
-                        video,
-                        ...novasPlaylists[video.playlist]
-                    ]
-                })
+    //                 novasPlaylists[video.playlist] = [
+    //                     video,
+    //                     ...novasPlaylists[video.playlist]
+    //                 ]
+    //             })
                 
-                setPlaylists(novasPlaylists)
-            })
-    }, [])
+    //             setPlaylists(novasPlaylists)
+    //         })
+    // }, [])
 
     return (
         <>
@@ -39,11 +39,25 @@ function HomePage() {
                     flex: 1
                 }
             }>
+                <video
+                    muted
+                    style={
+                        {
+                            width: "100%",
+                            zIndex: "99"
+                        }
+                    }
+                >
+                    <source src="/video-teste.mp4" type="video/mp4/" />
+                </video>
+
                 <Menu 
                     valorFiltro={valorFiltro}
                     setValorFiltro={setValorFiltro}
                 />
                 <Header bannerLink={config.bannerLink} />
+
+
                 <Timeline 
                     searchValue={valorFiltro}
                     playlists={playlists} 
