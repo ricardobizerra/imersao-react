@@ -48,7 +48,7 @@ function HomePage() {
                         }
                     }
                 >
-                    <source src="/video-teste.mp4" type="video/mp4/" />
+                    <source src="./video-teste.mp4" type="video/mp4/" />
                 </video>
 
                 <Menu 
